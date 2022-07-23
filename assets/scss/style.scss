@@ -68,9 +68,9 @@ body {
 // custom
 
 .container {
-    max-width: 992px;
-    padding: 0 20px;
-    margin: auto;
+  max-width: 992px;
+  padding: 0 20px;
+  margin: auto;
 }
 
 .controls {
@@ -106,5 +106,15 @@ body {
   user-select: none;
   &.active {
     background-color: tomato;
+  }
+}
+
+.control-pause {
+  position: relative;
+  > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
