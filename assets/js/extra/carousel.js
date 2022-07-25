@@ -36,7 +36,7 @@ export default class Carousel {
     </span>`;
     const PREV = `<span class="control control-prev" id="prev">${this.FA_PREV}</span>`;
     const NEXT = `<span class="control control-next" id="next">${this.FA_NEXT}</span>`;
-    controls.innerHTML = PAUSE + PREV + NEXT;
+    controls.innerHTML = PREV + PAUSE + NEXT;
     controls.setAttribute("class", "controls");
     this.container.append(controls);
 
@@ -44,18 +44,18 @@ export default class Carousel {
     this.prevBtn = document.querySelector("#prev");
     this.nextBtn = document.querySelector("#next");
 
-    this.pauseIcon = this.container.querySelector('#fa-pause-icon');
-    this.playIcon = this.container.querySelector('#fa-play-icon');
+    this.pauseIcon = this.container.querySelector("#fa-pause-icon");
+    this.playIcon = this.container.querySelector("#fa-play-icon");
 
     this.isPlaying ? this._pauseVisible() : this._playVisible();
   }
 
-  _pauseVisible (isVisible = true) {
+  _pauseVisible(isVisible = true) {
     this.pauseIcon.style.opacity = isVisible ? 1 : 0;
     this.playIcon.style.opacity = !isVisible ? 1 : 0;
   }
 
-  _playVisible(){
+  _playVisible() {
     this._pauseVisible(false);
   }
 
@@ -88,8 +88,10 @@ export default class Carousel {
       this._indicate.bind(this)
     );
     document.addEventListener("keydown", this._pressKey.bind(this));
-    this.container.addEventListener('mouseenter', this._pause.bind(this));
-    this.container.addEventListener('mouseleave', this._play.bind(this));
+    this.slides.forEach((el) => {
+      el.addEventListener("mouseenter", this._pause.bind(this));
+      el.addEventListener("mouseleave", this._play.bind(this));
+    });
   }
 
   _pressKey(e) {
