@@ -51,29 +51,59 @@ h1 {
   opacity: 1;
 }
 
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
 .control {
-  display: block;
+  position: absolute;
+  z-index: 2;
+  color: white;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
   user-select: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 2px;
-  background-color: white;
-  transition: 0.4s;
+  color: rgba(255, 255, 255, 0.2);
+  transition: 0.5s;
+
+  &:hover,
+  &:focus {
+    color: white;
+  }
 }
 
-.control:hover {
-  background-color: bisque;
-  border: 1px solid black;
+.control-prev {
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  padding-left: 20px;
+  font-size: 3rem;
+}
+
+.control-next {
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  padding-right: 20px;
+  font-size: 3rem;
+}
+
+.control-pause {
+  top: 50%;
+  left: 50%;
+  height: 0;
+  padding: 0;
+
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
+  > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25vh;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.control-pause:hover {
+  transition: opacity 1s ease-in 0.5s;
+
+  opacity: 1;
 }
 
 .indicators {
@@ -93,26 +123,5 @@ h1 {
   user-select: none;
   &.active {
     background-color: burlywood;
-  }
-}
-
-.control-pause {
-  position: relative;
-  > span {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.control-prev,
-.control-next {
-  position: relative;
-  > i {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
   }
 }

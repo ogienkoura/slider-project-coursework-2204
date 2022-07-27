@@ -7,12 +7,14 @@ export default class Carousel {
         interval: 5000,
         isPlaying: true,
       },
-      ...p,
+      ...p
     };
     this.container = document.querySelector(s.containerID);
     this.slides = this.container.querySelectorAll(s.slideID);
     this.interval = s.interval;
     this.isPlaying = s.isPlaying;
+
+    this.slidesContainer = document.querySelector('.slides');
   }
 
   _initProps() {
@@ -22,8 +24,8 @@ export default class Carousel {
     this.CODE_LEFT_ARROW = 'ArrowLeft';
     this.CODE_RIGHT_ARROW = 'ArrowRight';
     this.CODE_SPACE = 'Space';
-    this.FA_PAUSE = '<i class="fas fa-pause-circle"></i>';
-    this.FA_PLAY = '<i class="fas fa-play-circle"></i>';
+    this.FA_PAUSE = '<i class="far fa-pause-circle"></i>';
+    this.FA_PLAY = '<i class="far fa-play-circle"></i>';
     this.FA_PREV = '<i class="fas fa-angle-left"></i>';
     this.FA_NEXT = '<i class="fas fa-angle-right"></i>';
   }
@@ -38,7 +40,7 @@ export default class Carousel {
     const NEXT = `<span class="control control-next" id="next">${this.FA_NEXT}</span>`;
     controls.innerHTML = PREV + PAUSE + NEXT;
     controls.setAttribute('class', 'controls');
-    this.container.append(controls);
+    this.slidesContainer.append(controls);
 
     this.pauseBtn = document.querySelector('#pause');
     this.prevBtn = document.querySelector('#prev');
@@ -50,13 +52,15 @@ export default class Carousel {
     this.isPlaying ? this._pauseVisible() : this._playVisible();
   }
 
-  _pauseVisible(isVisible = true) {
-    this.pauseIcon.style.opacity = isVisible ? 1 : 0;
-    this.playIcon.style.opacity = !isVisible ? 1 : 0;
-  }
-
-  _playVisible() {
-    this._pauseVisible(false);
+  _initListeners() {
+    document.addEventListener('keydown', this._pressKey.bind(this));
+    this.pauseBtn.addEventListener('click', this.pausePlay.bind(this));
+    this.prevBtn.addEventListener('click', this.prev.bind(this));
+    this.nextBtn.addEventListener('click', this.next.bind(this));
+    this.indicatorContainer.addEventListener(
+      'click',
+      this._indicate.bind(this)
+    );
   }
 
   _initIndicators() {
@@ -79,17 +83,13 @@ export default class Carousel {
     this.indicators = this.indicatorContainer.querySelectorAll('.indicator');
   }
 
-  _initListeners() {
-    document.addEventListener('keydown', this._pressKey.bind(this));
-    this.pauseBtn.addEventListener('click', this.pausePlay.bind(this));
-    this.prevBtn.addEventListener('click', this.prev.bind(this));
-    this.nextBtn.addEventListener('click', this.next.bind(this));
-    this.indicatorContainer.addEventListener(
-      'click',
-      this._indicate.bind(this)
-    );
-    this.container.addEventListener('mouseenter', this._pause.bind(this));
-    this.container.addEventListener('mouseleave', this._play.bind(this));
+  _pauseVisible(isVisible = true) {
+    this.pauseIcon.style.opacity = isVisible ? 1 : 0;
+    this.playIcon.style.opacity = !isVisible ? 1 : 0;
+  }
+
+  _playVisible() {
+    this._pauseVisible(false);
   }
 
   _pressKey(e) {
@@ -143,13 +143,13 @@ export default class Carousel {
     this.isPlaying ? this._pause() : this._play();
   }
 
-  prev() {
-    this._gotoPrev();
+  next() {
+    this._gotoNext();
     this._pause();
   }
 
-  next() {
-    this._gotoNext();
+  prev() {
+    this._gotoPrev();
     this._pause();
   }
 
